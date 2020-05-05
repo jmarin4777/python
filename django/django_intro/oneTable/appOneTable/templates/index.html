@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Table</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <script src="{{'/static/'}}js/jquery.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 class="display-4">All the Dungeons</h1>
+        </div>
+        <div class="row dungeons">
+            <table class="table table-dark text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col"># of Prisoners</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Dislikes</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="scroll">
+                    {%for i in db%}
+                        <tr>
+                            <th scope="row">{{i.id}}</th>
+                            <td>{{i.name}}</td>
+                            <td>{{i.num_people_inside}}</td>
+                            <td>{{i.location}}</td>
+                            <td>{{i.prisoner_dislikes.all.count}}</td>
+                            <td>
+                                <form action="/delete/{{i.id}}" method="post">
+                                    {%csrf_token%}
+                                    <input type="image" class="delete" src="{%static 'imgs/delete.png'%}" alt="Delete">
+                                </form>
+                            </td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6 text-center">
+                <h2>Add a Dungeon</h2>
+                <form action="/addDungeon" method="post">
+                    {%csrf_token%}
+                    <div class="row">
+                        <label class="col-sm-3 text-left align-self-center mt-2" for="name">Name:</label>
+                        <input type="text" class="form-control col-sm-8 mt-2" name="name" id="name" placeholder="Name of Dungeon Here...">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 text-left align-self-center mt-2" for="location">Location:</label>
+                        <input type="text" class="form-control col-sm-8 mt-2" name="location" id="location" placeholder="Location of Dungeon Here...">
+                    </div>
+                    <div class="row justify-content-center">
+                        <input type="submit" class="btn btn-dark form-control col-sm-4 mt-2" value="Add Dungeon">
+                    </div>
+                </form>
+            </div>
+            <div class="col-6 pr-0 text-center">
+                <h2>Add a Prisoner</h2>
+                <form action="/addPrisoner" method="post">
+                    {%csrf_token%}
+                    <div class="row">
+                        <label class="col-sm-4 text-left align-self-center mt-2" for="first_name">First Name:</label>
+                        <input type="text" class="form-control col-sm-7 mt-2" name="first_name" id="first_name" placeholder="First Name Here...">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4 text-left align-self-center mt-2" for="last_name">Last Name:</label>
+                        <input type="text" class="form-control col-sm-7 mt-2" name="last_name" id="last_name" placeholder="Last Name Here...">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4 text-left align-self-center mt-2" for="dungeon">Dungeon:</label>
+                        <select class="form-control col-sm-7 mt-2" id="dungeon" name="dungeon">
+                            <option value="" disabled selected>Select a Dungeon</option>
+                            {%for i in db%}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="row justify-content-center">
+                        <input type="submit" class="btn btn-dark form-control col-sm-4 mt-2" value="Add Prisoner">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <h1 class="display-4">Prisoners in each Dungeon</h1>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <ul class="list-group list-group-flush w-75">
+                {%for i in db%}
+                    <li class="list-group-item list-group-item-dark font-weight-bold">
+                        {{i.name}}
+                        {%for j in i.prisoners.all%}
+                            <li class="list-group-item indent">
+                                <p class="d-inline-block">
+                                    > {{j.first_name}} 
+                                    {%if j.last_name != null%}
+                                    {{j.last_name}}
+                                    {%endif%}
+                                </p>
+                                <form class="d-inline-block w-50 text-right" action="/dislike/{{j.id}}" method="post">
+                                    {%csrf_token%}
+                                    <select id="dislikes" name="dislikes" class="w-75 form-control d-inline-block">
+                                        <option value="" disabled selected>Dislike a Dungeon</option>
+                                        {%for i in db%}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                        {%endfor%}
+                                    </select>
+                                    <input class="d-inline-block dislikes" type="image" src="{%static 'imgs/thumbs_down.jpg'%}" alt="Submit Dislike">
+                                </form>
+                            </li>
+                        {%endfor%}
+                    </li>
+                {%endfor%}
+            </ul>
+        </div>
+    </div>
+    <!-- <form action="/deletePrisoner/{{j.id}}" method="post">
+        <input type="submit" class="btn btn-danger form-control" value="Remove Prisoner">
+    </form> -->
+    <script>
+        // x = document.getElementById('scroll').offsetWidth - document.getElementById('scroll').clientWidth
+        // console.log(x)
+    </script>
+</body>
+</html>

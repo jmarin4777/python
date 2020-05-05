@@ -1,0 +1,17 @@
+.counter{
+    width: inherit;
+    height: 25px;
+    border: 1px solid black;
+}
+.activities{
+    height: 200px;
+}
+.activities p{
+    margin: 0;
+}
+.green{
+    color: lime;
+}
+.red{
+    color: red;
+}

@@ -1,0 +1,109 @@
+**************************************************************************
+
+models.py:
+from django.db import models
+
+# Create your models here.
+class Dojo(models.Model):
+    name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)
+    desc = models.TextField(null=True)
+    #ninjas = a list of ninjas for a given dojo
+class Ninja(models.Model):
+    dojo = models.ForeignKey(Dojo, related_name="ninjas", on_delete = models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    
+**************************************************************************
+
+
+>>> from dojo_ninjas_app.models import *
+>>> Dojo.objects.create(name="Dallas", city="Dallas", state="TX")
+<Dojo: Dojo object (1)>
+>>> Dojo.objects.create(name="Tulsa", city="Tulas", state="OK")
+<Dojo: Dojo object (2)>
+>>> Dojo.objects.create(name="Silicon Valley", city="Silicon Valley", state="CA")
+<Dojo: Dojo object (3)>
+>>> for i in Dojo.objects.all():
+... i.delete()
+  File "<console>", line 2
+    i.delete()
+    ^
+IndentationError: expected an indented block
+>>> for i in Dojo.objects.all():
+...     i.delete()
+...
+(1, {'dojo_ninjas_app.Ninja': 0, 'dojo_ninjas_app.Dojo': 1})
+(1, {'dojo_ninjas_app.Ninja': 0, 'dojo_ninjas_app.Dojo': 1})
+(1, {'dojo_ninjas_app.Ninja': 0, 'dojo_ninjas_app.Dojo': 1})
+>>> Dojo.objects.all()
+<QuerySet []>
+>>> Dojo.objects.create(name="Dallas", city="Dallas", state="TX")
+<Dojo: Dojo object (4)>
+>>> Dojo.objects.create(name="Tulsa", city="Tulas", state="OK")
+<Dojo: Dojo object (5)>
+>>> Dojo.objects.create(name="Silicon Valley", city="Silicon Valley", state="CA")
+<Dojo: Dojo object (6)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=4), first_name="John", last_name="Smith"  )
+
+
+<Ninja: Ninja object (1)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=4), first_name="Bob", last_name="Garcia" )
+
+
+<Ninja: Ninja object (2)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=4), first_name="Jeff", last_name="Johnsn 
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=4), first_name="Jeff", last_name="Johnson
+")
+<Ninja: Ninja object (3)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Jimmy" last_name="Neal") 
+  File "<console>", line 1
+    Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Jimmy" last_name="Neal") 
+                                                                         ^
+SyntaxError: invalid syntax
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Jimmy", last_name="Neal) 
+
+
+<Ninja: Ninja object (4)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Clay", last_name="Robins  o
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Clay", last_name="Robinson")
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=5), first_name="Scott", last_name="Simmons")
+Ninja.objects.create(dojo=Dojo.objects.get(id=6), first_name="George", last_name="Jones
+")
+<Ninja: Ninja object (7)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=6), first_name="Clifford", last_name="Do g
+
+")
+<Ninja: Ninja object (8)>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=6), first_name="Austin", last_name="Red" )
+
+
+<Ninja: Ninja object (9)>
+>>> x = Dojo.objects.first()
+>>> for i in x.ninjas.all():
+...     print(i.first_name)
+...
+John
+Bob
+Jeff
+>>> y = Dojo.objects.last()
+>>> for ninja in y.ninjas.all():
+...     print(ninja.first_name)
+...
+George
+Clifford
+Austin
+>>> z = Ninja.objects.last()
+>>> z.dojo.name
+'Silicon Valley'
+>>> from dojo_ninjas_app.models import *
+>>> new_dojo = Dojo.objects.create(name="Austin", city="Austin", state="TX", desc="There's 
+a Dojo in Austin!")
+>>> for dojo in Dojo.objects.all():
+...     print(dojo.name, dojo.desc)
+...
+Dallas None
+Tulsa None
+Silicon Valley None
+Austin There's a Dojo in Austin!

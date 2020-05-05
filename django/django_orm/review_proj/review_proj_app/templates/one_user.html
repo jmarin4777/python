@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+</head>
+<body>
+    <!-- Leave me blank for the group activity! -->
+    <h1>Name: {{user.name}}</h1>
+    <h1># of Cats Submitted:</h1>
+    <ul>
+        {% for cat in user.cats.all %}
+            <li>{{cat.name}}</li>
+        {% endfor %}
+    </ul>
+    <!-- {{user.cats.all.count}} also works -->
+    <h1># of Cats Voted For: {{user.cats_voted_for.count}}</h1>
+    <h1>Cats Voted For:</h1>
+    <ul>
+    {% for cat in user.cats_voted_for.all %}
+        <li>{{cat.name}}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

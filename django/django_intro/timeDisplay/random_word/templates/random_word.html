@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Word Generator</title>
+</head>
+<body>
+    <h1>{{rand}}</h1>
+    <h1>Count: {{count}}</h1>
+    <form action="/reset" method="post">
+        {%csrf_token%}
+        <input type="submit" value="Reset">
+    </form>
+</body>
+</html>

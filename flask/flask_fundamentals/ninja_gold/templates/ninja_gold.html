@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold!</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-3 p-0">
+                <h5>Your Gold:</h5>
+            </div>
+            <div class="col-3 p-0">
+                <p class="counter pl-2">{{gold}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-2 text-center">
+                <div class="card bg-secondary p-2">
+                    <h1>Farm</h1>
+                    <p class="lead">(earns 10-20 gold)</p>
+                    <form action="/process" method="post">
+                        <input type="hidden" name="gold" value="farm">
+                        <input class="btn btn-dark" type="submit" name="farm" value="Find Gold!">
+                    </form>
+                </div>
+            </div>
+            <div class="col mb-2 text-center">
+                <div class="card bg-secondary p-2">
+                    <h1>Cave</h1>
+                    <p class="lead">(earns 5-10 gold)</p>
+                    <form action="/process" method="post">
+                        <input type="hidden" name="gold" value="cave">
+                        <input class="btn btn-dark" type="submit" name="cave" value="Find Gold!">
+                    </form>
+                </div>
+            </div>
+            <div class="col mb-2 text-center">
+                <div class="card bg-secondary p-2">
+                    <h1>House</h1>
+                    <p class="lead">(earns 2-5 gold)</p>
+                    <form action="/process" method="post">
+                        <input type="hidden" name="gold" value="house">
+                        <input class="btn btn-dark" type="submit" name="house" value="Find Gold!">
+                    </form>
+                </div>
+            </div>
+            <div class="col mb-2 text-center">
+                <div class="card bg-secondary p-2">
+                    <h1>Casino</h1>
+                    <p class="lead">(earn or lose 0-50 gold)</p>
+                    <form action="/process" method="post">
+                        <input type="hidden" name="gold" value="casino">
+                        <input class="btn btn-dark" type="submit" name="casino" value="Find Gold!">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <h5 class="row">Activities:</h5>
+        <div class="row bg-secondary rounded-sm p-2 activities">
+            <div class="col overflow-auto h-100 w-100">
+                {{act|safe}}
+            </div>
+        </div>
+        <div class="row mt-2">
+            <form action="/process" method="post">
+                <input type="hidden" name="gold" value="reset">
+                <input class="btn btn-dark" type="submit" name="reset" value="Reset">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+h1{
+    display: flex;
+}

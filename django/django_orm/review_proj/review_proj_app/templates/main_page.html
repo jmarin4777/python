@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <h1 class="col-4 display-4">Hello 
+                <a href="/profile">{{user.name}}</a>!
+            </h1> <!-- Show the name of whoever is logged in instead of the ______ -->
+            <form class="form-group col-3" action="/logout" method="POST">
+                <input type="submit" class="form-control btn btn-link" value="Logout">
+            </form> <!-- Ease of access, don't worry about changing this, but know how to do a logout! -->
+        </div>
+        <div class="row justify-content-center">
+            <h2 class="col-5 text-center font-weight-light">Vote for the Cutest Cat of 2020!</h2>
+        </div>
+        <hr>
+        <div class="row bg-dark">
+            <div class="col">
+                <h3 class="row justify-content-center font-weight-light text-light">Cats Voted For:</h3>
+                <table class="table text-center table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Owner's Name</th>
+                            <th scope="col"># of Votes</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cat in user.cats_voted_for.all %}
+                        <tr>
+                            <th scope="row"><a href="/cat/{{cat.id}}">{{cat.name}}</a></td>
+                            <td>{{cat.owner.name}}</td>
+                            <td>{{cat.users_who_voted_for.count}} vote(s)</td>
+                            <td class="row justify-content-center">
+                                {% if cat.owner == user %}
+                                    <form class="form-group col-6" action="/deleteCat/{{cat.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <input class="form-control btn btn-danger" type="submit" value="Delete">
+                                    </form>
+                                {% else %}
+                                    <div class="col-6"></div>
+                                {% endif %}
+                                <form class="form-group col-6" action="/voteCat/{{cat.id}}" method="POST">
+                                    {% csrf_token %}
+                                    {% if user not in cat.users_who_voted_for.all %}
+                                        <input class="form-control btn btn-success" type="submit" value="Vote">
+                                    {% else %}
+                                        <input class="form-control" type="submit" value="Unvote">
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <h3 class="row justify-content-center font-weight-light text-light">Cat's Yet To Be Voted For</h3>
+                <table class="table text-center table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Owner's Name</th>
+                            <th scope="col"># of Votes</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cat in cats %}
+                        {% if cat not in user.cats_voted_for.all %}
+                            <tr>
+                                <th scope="row"><a href="/cat/{{cat.id}}">{{cat.name}}</a></td>
+                                <td>{{cat.owner.name}}</td>
+                                <td>{{cat.users_who_voted_for.count}} vote(s)</td>
+                                <td class="row justify-content-center">
+                                    {% if cat.owner == user %}
+                                        <form class="form-group col-6" action="/deleteCat/{{cat.id}}" method="POST">
+                                            {% csrf_token %}
+                                            <input class="form-control btn btn-danger" type="submit" value="Delete">
+                                        </form>
+                                    {% else %}
+                                        <div class="col-6"></div>
+                                    {% endif %}
+                                    <form class="form-group col-6" action="/voteCat/{{cat.id}}" method="POST">
+                                        {% csrf_token %}
+                                        {% if user not in cat.users_who_voted_for.all %}
+                                            <input class="form-control btn btn-success" type="submit" value="Vote">
+                                        {% else %}
+                                            <input class="form-control" type="submit" value="Unvote">
+                                        {% endif %}
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <h3 class="col-4 text-center font-weight-light">Submit a Cat</h3>
+        </div>
+        {% if messages %}
+            <div class="row justify-content-center">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{message}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <form class="form-group form-inline justify-content-center" action="/cats" method="POST">
+            {% csrf_token %}
+            <label class="mx-2" for="name">Name:</label>
+            <input class="mx-2 form-control" type="text" name="name" id="name">
+            <input class="mx-2 form-control" type="submit" value="Submit a Cat!">
+        </form>
+        <!-- Put a form here that will create a Cat, I have already given you a path and a views function to use -->
+        <!-- The owner of the Cat will be whoever is logged in currently, do NOT make an input for owner -->
+        <!-- Show error messages if there is a problem -->
+    </div>
+</body>
+</html>

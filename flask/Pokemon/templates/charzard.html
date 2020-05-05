@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'bootstrap.css')}}">
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Charzard</h1>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form action="/charzard/fly" method="POST">
+                    <input type="submit" value="fly">
+                    
+                </form>
+            </div>
+            <div class="col">
+                <form action="/charzard/flamethrower" method="POST">
+                    <input type="submit" value="flamethrower">
+            
+                </form>
+            </div>
+        </div>
+</body>
+</html>

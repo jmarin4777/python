@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Shows</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'bootstrap.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center mb-2">
+            <h1 class="display-4">All Shows</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Network</th>
+                            <th scope="col">Release Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for show in shows%}
+                            <tr>
+                                <th scope="row">{{show.id}}</th>
+                                <td>{{show.title}}</td>
+                                <td>{{show.network}}</td>
+                                <td>{{show.release_date}}</td>
+                                <td>
+                                    <div class="row justify-content-center">
+                                        <form class="form-group d-inline" action="/shows/{{show.id}}" method="GET">
+                                            {% csrf_token %}
+                                            <input type="submit" class="p-0 btn btn-link" value="Show">
+                                        </form>
+                                        <p class="d-inline mr-2 ml-2">|</p>
+                                        <form class="form-group d-inline" action="/shows/{{show.id}}/edit" method="POST">
+                                            {% csrf_token %}
+                                            <input type="submit" class="p-0 btn btn-link" value="Edit">
+                                        </form>
+                                        <p class="d-inline mr-2 ml-2">|</p>
+                                        <form class="form-group d-inline" action="/shows/{{show.id}}/delete" method="POST">
+                                            {% csrf_token %}
+                                            <input type="submit" class="p-0 btn btn-link" value="Delete">
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a class="col" href="{% url 'new' %}">Add a New Show</a>
+        </div>
+    </div>
+</body>
+</html>

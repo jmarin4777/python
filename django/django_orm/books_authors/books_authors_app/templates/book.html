@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'bootstrap.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="display 4">{{title}}</h1>
+        </div>
+        <div class="row">
+            <h4 class="col-sm-2 ml-2">ID:</h4>
+            <p class="col-sm-2">{{id}}</p>
+        </div>
+        <div class="row">
+            <h4 class="col-sm-2 ml-2">Description:</h4>
+            <p class="col-sm-8">{{desc}}</p>
+        </div>
+        <div class="row">
+            <h4 class="col-12 ml-2">Authors:</h4>
+            <ul class="list-group list-group ml-5 mb-2">
+                {%for author in authors%}
+                    <li class="list-group-item list-group-item-secondary">{{author.first_name}} {{author.last_name}}</li>
+                {%endfor%}
+            </ul>
+        </div>
+        <form class="form-group row" action="/addAuthor/{{id}}" method="post">
+            {%csrf_token%}
+            <select class="form-control col-sm-2 ml-5" name="author">
+                <option disabled selected>-Select an Author-</option>
+                {%for author in ar%}
+                    {%if author not in authors%}
+                        <option value="{{author.id}}">{{author.first_name}} {{author.last_name}}</option>
+                    {%endif%}
+                {%endfor%}
+            </select>
+            <input type="submit" class="form-control col-sm-1 ml-2" value="Add">
+        </form>
+    </div>
+</body>
+</html>

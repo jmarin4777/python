@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Show</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'bootstrap.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div class="row align-items-center mb-2">
+            <div class="col-3"></div>
+            <h1 class="display-4 col-6">Add a New Show</h1>
+            <a class="col-3 text-right" href="{% url 'show'%}">Show List</a>
+        </div>
+        {% if messages %}
+            <div class="row justify-content-center">
+                <ul>
+                    {% for message in messages %}   
+                        <li style="color: red">{{message}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-3"></div>
+            <form class="form-group col-6" action="{% url 'add' %}" method="POST">
+                {%csrf_token%}
+                <div class="row">
+                    <div class="col">
+                        <label for="title">Title <span style="color: red;">*</span></label>
+                        {{form.title}}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-6">
+                        <label for="network">Network <span style="color: red;">*</span></label>
+                        {{form.network}}
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="release_date">Release Date <span   style="color: red;">*</span></label>
+                        {{form.release_date}}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="desc">Description</label>
+                        {{form.desc}}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-3">
+                        <input class="form-control" type="submit" value="Create">
+                    </div>
+                </div>
+            </form>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+</html>

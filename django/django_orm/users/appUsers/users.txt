@@ -1,0 +1,26 @@
+python manage.py makemigrations
+python manage.py migrate
+from appUsers.models import User
+
+User.objects.create(first_name="Jeff", last_name="Smith", 
+email_address="mynameisjeff@hotmail.com", age=25)
+
+y = User.objects.create(first_name="Jimmy", last_name="Johns", 
+email_address="jjs@hotmail.com", age=60)
+
+z = User.objects.create(first_name="Bob", last_name="The Builder", 
+email_address="thebestbuilder@hotmail.com", age=30)
+
+User.objects.all()
+User.objects.last()
+User.objects.first()
+
+z = User.objects.get(id=3)
+z.last_name = "Pancakes"
+z.save()
+
+y = User.objects.get(id=2)
+y.delete()
+
+User.objects.order_by('first_name')
+User.objects.order_by('-first_name')

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojo Survey</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'bootstrap.css')}}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-4 border-bottom">Submitted Info</h1>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Name:</div>
+            <div class="col-sm-5">{{name}}</div>
+        </div>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Dojo Location:</div>
+            <div class="col-sm-5">{{location}}</div>
+        </div>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Favorite Language:</div>
+            <div class="col-sm-5">{{language}}</div>
+        </div>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Comment:</div>
+            <div class="col-sm-5">{{comment}}</div>
+        </div>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Loves Coding?</div>
+            <div class="col-sm-5">{{radio}}</div>
+        </div>
+        <div class="row font-weight-light">
+            <div class="col-sm-5">Languages to Learn More About:</div>
+                <div class="col-sm-5">
+                {%for i in checkbox%}
+                    {{i}}, 
+                {%endfor%}
+                </div>
+        </div>
+    </div>
+</body>
+</html>

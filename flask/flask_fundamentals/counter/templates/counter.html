@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        input{
+            margin: 10px;
+            width: 60px;
+            height: 30px;
+        }
+        .number{
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello World!</h1>
+    <p>Counter: {{session['count']}}</p>
+    <p>Page Views: {{session['views']}}</p>
+    <form action="/increment_by_2" method="POST">
+        <p>Increment by 2:</p>
+        <input type="submit" value="+2">
+    </form>
+    <form action="/increment" method="POST">
+        <p>Increment by: </p>
+        <input type="number" class="number" placeholder="Enter a number here" name="inc">
+        <input type="submit" value="Submit">
+    </form>
+    <form action="/destroy_session" method="POST">
+        <p>Reset Page Views:</p>
+        <input type="submit" value="Reset">
+    </form>
+    <form action="/reset_counter" method="POST">
+        <p>Reset Counter:</p>
+        <input type="submit" value="Reset">
+    </form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'bootstrap.css')}}">
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Hello World!</h1>
+        <p>Team Rocket challenges you to a battle! Who do you choose? </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form action="/pikachu" method="POST">
+                    <input type="submit" value="pikachu">
+                    
+                </form>
+            </div>
+            <div class="col">
+                <form action="/charzard" method="POST">
+                    <input type="submit" value="charzard">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

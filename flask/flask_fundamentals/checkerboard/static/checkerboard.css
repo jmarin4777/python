@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+}
+.row{
+    max-width: fit-content;
+}
+.box1{
+    height: 50px;
+    width: 50px;
+    background-color: red;
+    display: inline-block;
+}
+.box2{
+    height: 50px;
+    width: 50px;
+    background-color: black;
+    display: inline-block;
+}
